@@ -71,6 +71,13 @@ const getExtendedBrowsersConfigs = (config, commandArgs): any => {
     ];
   }
 
+  if (config.incognito) {
+    configs.chromeConfig.chromeOptions.args = [
+      ...configs.chromeConfig.chromeOptions.args,
+      '--incognito'
+    ];
+  }
+
   if (
     (config.headless && commandArgs.headless === undefined) ||
     (commandArgs.headless && commandArgs.headless !== 'false')
