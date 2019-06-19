@@ -1,4 +1,4 @@
 export interface Generator {
   isSatisfiedBy(name: string): boolean;
-  generate(...params: any): Promise<any>;
+  generate(...params: any[]): Promise<any>;
 }

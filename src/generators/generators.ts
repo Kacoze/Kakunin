@@ -6,7 +6,7 @@ export class Generators {
     private availableGenerators: Generator[] = [generators.personalDataGenerator, generators.stringWithLengthGenerator]
   ) {}
 
-  public generate(generatorName: string, ...params: any): Promise<any> {
+  public generate(generatorName: string, ...params: any[]): Promise<any> {
     const gen: Generator = this.findGenerator(generatorName);
 
     if (gen === undefined) {

@@ -1,6 +1,6 @@
 import * as glob from 'glob';
 import * as path from 'path';
-import { createFirefoxProfile } from './create-firefox-profile.helper';
+// import { createFirefoxProfile } from './create-firefox-profile.helper';
 import { safariBrowserConfigurator } from './safari-browser-configurator.helper';
 import { prepareBrowserInstance } from '../parallel/prepare-browser-instance-specs.helper';
 import { chunkSpecs } from '../parallel/chunk-specs.helper';
@@ -72,10 +72,7 @@ const getExtendedBrowsersConfigs = (config, commandArgs): any => {
   }
 
   if (config.incognito) {
-    configs.chromeConfig.chromeOptions.args = [
-      ...configs.chromeConfig.chromeOptions.args,
-      '--incognito'
-    ];
+    configs.chromeConfig.chromeOptions.args = [...configs.chromeConfig.chromeOptions.args, '--incognito'];
   }
 
   if (
@@ -127,10 +124,10 @@ export const browsersConfiguration = (config, commandArgs): any => {
       return Promise.resolve([prepareBrowserInstance(config.browserstack.capabilities, allSpecs)]);
     }
 
-    if (commandArgs.firefox) {
-      browserConfigs.firefoxConfig.firefox_profile = createFirefoxProfile(config);
-      pushPreparedBrowserInstance('firefoxConfig');
-    }
+    // if (commandArgs.firefox) {
+    //   browserConfigs.firefoxConfig.firefox_profile = createFirefoxProfile(config);
+    //   pushPreparedBrowserInstance('firefoxConfig');
+    // }
 
     if (commandArgs.safari) {
       safariBrowserConfigurator(config);
