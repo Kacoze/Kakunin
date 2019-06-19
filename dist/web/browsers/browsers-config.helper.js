@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const glob = require("glob");
 const path = require("path");
-// import { createFirefoxProfile } from './create-firefox-profile.helper';
+const create_firefox_profile_helper_1 = require("./create-firefox-profile.helper");
 const safari_browser_configurator_helper_1 = require("./safari-browser-configurator.helper");
 const prepare_browser_instance_specs_helper_1 = require("../parallel/prepare-browser-instance-specs.helper");
 const chunk_specs_helper_1 = require("../parallel/chunk-specs.helper");
@@ -109,10 +109,10 @@ exports.browsersConfiguration = (config, commandArgs) => {
         if (commandArgs.browserstack) {
             return Promise.resolve([prepare_browser_instance_specs_helper_1.prepareBrowserInstance(config.browserstack.capabilities, allSpecs)]);
         }
-        // if (commandArgs.firefox) {
-        //   browserConfigs.firefoxConfig.firefox_profile = createFirefoxProfile(config);
-        //   pushPreparedBrowserInstance('firefoxConfig');
-        // }
+        if (commandArgs.firefox) {
+            browserConfigs.firefoxConfig.firefox_profile = create_firefox_profile_helper_1.createFirefoxProfile(config);
+            pushPreparedBrowserInstance('firefoxConfig');
+        }
         if (commandArgs.safari) {
             safari_browser_configurator_helper_1.safariBrowserConfigurator(config);
             pushPreparedBrowserInstance('safariConfig');
