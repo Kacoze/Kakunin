@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const commandArgs = require('minimist')(process.argv.slice(2));
 let config = require(`${process.cwd()}/kakunin.conf.js`);
-console.log(process.cwd());
+console.log(config);
 config = {
     projectPath: process.cwd(),
     email: {
