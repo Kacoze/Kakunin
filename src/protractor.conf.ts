@@ -87,7 +87,9 @@ exports.config = {
 
   async afterLaunch() {
     await disconnectBrowserstack(commandArgs.browserstack);
-    return retry.afterLaunch(2);
+    if (config.jenkins) {
+      return retry.afterLaunch(2);
+    }
   },
 
   onPrepare() {
@@ -97,7 +99,9 @@ exports.config = {
         .window()
         .setSize(parseInt(config.browserWidth), parseInt(config.browserHeight));
     }
-    retry.onPrepare();
+    if (config.jenkins) {
+      retry.onPrepare();
+    }
 
     modulesLoader.getModules('matchers');
     modulesLoader.getModules('dictionaries');
@@ -123,7 +127,9 @@ exports.config = {
   },
 
   onCleanUp(results) {
-    retry.onCleanUp(results);
+    if (config.jenkins) {
+      retry.onCleanUp(results);
+    }
   },
 
   baseUrl: config.baseUrl,
