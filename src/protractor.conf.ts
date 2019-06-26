@@ -99,10 +99,6 @@ exports.config = {
         .window()
         .setSize(parseInt(config.browserWidth), parseInt(config.browserHeight));
     }
-    if (config.jenkins) {
-      retry.onPrepare();
-    }
-
     modulesLoader.getModules('matchers');
     modulesLoader.getModules('dictionaries');
     modulesLoader.getModules('generators');
@@ -123,6 +119,10 @@ exports.config = {
 
     if (config.clearEmailInboxBeforeTests) {
       return emailService.clearInbox();
+    }
+
+    if (config.jenkins) {
+      retry.onPrepare();
     }
   },
 
