@@ -87,9 +87,9 @@ exports.config = {
 
   async afterLaunch() {
     await disconnectBrowserstack(commandArgs.browserstack);
-    if (config.jenkins) {
+    // if (config.jenkins) {
       return retry.afterLaunch(2);
-    }
+    // }
   },
 
   onPrepare() {
@@ -121,15 +121,15 @@ exports.config = {
       return emailService.clearInbox();
     }
 
-    if (config.jenkins) {
+    // if (config.jenkins) {
       retry.onPrepare();
-    }
+    // }
   },
 
   onCleanUp(results) {
-    if (config.jenkins) {
+    // if (config.jenkins) {
       retry.onCleanUp(results);
-    }
+    // }
   },
 
   baseUrl: config.baseUrl,

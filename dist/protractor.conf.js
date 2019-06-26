@@ -75,7 +75,9 @@ exports.config = {
     },
     async afterLaunch() {
         await browserstack_config_helper_1.disconnectBrowserstack(commandArgs.browserstack);
+        // if (config.jenkins) {
         return protractor_retry_1.retry.afterLaunch(2);
+        // }
     },
     onPrepare() {
         if (!config_helper_1.default.headless) {
@@ -84,7 +86,6 @@ exports.config = {
                 .window()
                 .setSize(parseInt(config_helper_1.default.browserWidth), parseInt(config_helper_1.default.browserHeight));
         }
-        protractor_retry_1.retry.onPrepare();
         modulesLoader.getModules('matchers');
         modulesLoader.getModules('dictionaries');
         modulesLoader.getModules('generators');
@@ -99,9 +100,14 @@ exports.config = {
         if (config_helper_1.default.clearEmailInboxBeforeTests) {
             return emails_1.emailService.clearInbox();
         }
+        // if (config.jenkins) {
+        protractor_retry_1.retry.onPrepare();
+        // }
     },
     onCleanUp(results) {
+        // if (config.jenkins) {
         protractor_retry_1.retry.onCleanUp(results);
+        // }
     },
     baseUrl: config_helper_1.default.baseUrl,
 };
