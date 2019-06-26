@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as childProcess from 'child_process';
 import * as envfile from 'node-env-file';
-import { createTagsCLIArgument, filterCLIArguments, getConfigPath, isInitCommand } from './core/cli/cli.helper';
+import { createTagsCLIArgument, filterCLIArguments, isInitCommand } from './core/cli/cli.helper';
 import initializer from './core/cli/initializer';
 const commandArgs = require('minimist')(process.argv.slice(2));
 
