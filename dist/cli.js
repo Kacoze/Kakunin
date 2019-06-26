@@ -9,6 +9,7 @@ const envfile = require("node-env-file");
 const cli_helper_1 = require("./core/cli/cli.helper");
 const initializer_1 = require("./core/cli/initializer");
 const commandArgs = require('minimist')(process.argv.slice(2));
+console.log(process.cwd());
 envfile(process.cwd() + '/.env', { raise: false, overwrite: false });
 if (cli_helper_1.isInitCommand(process.argv)) {
     (async () => {
@@ -20,7 +21,7 @@ else {
     const optionsToFilter = ['config', 'projectPath', 'disableChecks', 'tags'];
     const argv = [
         './node_modules/kakunin/dist/protractor.conf.js',
-        `--config=${cli_helper_1.getConfigPath('kakunin.conf.js', commandArgs.config, process.cwd())}`,
+        `--config=${process.cwd()}/kakunin.conf.js`,
         `--projectPath=${process.cwd()}`,
         '--disableChecks',
         ...cli_helper_1.createTagsCLIArgument(commandArgs),

@@ -8,6 +8,8 @@ import { createTagsCLIArgument, filterCLIArguments, getConfigPath, isInitCommand
 import initializer from './core/cli/initializer';
 const commandArgs = require('minimist')(process.argv.slice(2));
 
+console.log(process.cwd());
+
 envfile(process.cwd() + '/.env', { raise: false, overwrite: false });
 
 if (isInitCommand(process.argv)) {
@@ -20,7 +22,7 @@ if (isInitCommand(process.argv)) {
 
   const argv = [
     './node_modules/kakunin/dist/protractor.conf.js',
-    `--config=${getConfigPath('kakunin.conf.js', commandArgs.config, process.cwd())}`,
+    `--config=${process.cwd()}/kakunin.conf.js`,
     `--projectPath=${process.cwd()}`,
     '--disableChecks',
     ...createTagsCLIArgument(commandArgs),
