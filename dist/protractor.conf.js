@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('./core/prototypes');
 const jestExpect = require("expect");
 const path = require("path");
+const protractor_retry_1 = require("protractor-retry");
 const config_helper_1 = require("./core/config.helper");
 const delete_files_helper_1 = require("./core/fs/delete-files.helper");
 const prepare_catalogs_helper_1 = require("./core/fs/prepare-catalogs.helper");
@@ -74,6 +75,7 @@ exports.config = {
     },
     async afterLaunch() {
         await browserstack_config_helper_1.disconnectBrowserstack(commandArgs.browserstack);
+        return protractor_retry_1.retry.afterLaunch(2);
     },
     onPrepare() {
         if (!config_helper_1.default.headless) {
@@ -82,6 +84,7 @@ exports.config = {
                 .window()
                 .setSize(parseInt(config_helper_1.default.browserWidth), parseInt(config_helper_1.default.browserHeight));
         }
+        protractor_retry_1.retry.onPrepare();
         modulesLoader.getModules('matchers');
         modulesLoader.getModules('dictionaries');
         modulesLoader.getModules('generators');
@@ -96,6 +99,9 @@ exports.config = {
         if (config_helper_1.default.clearEmailInboxBeforeTests) {
             return emails_1.emailService.clearInbox();
         }
+    },
+    onCleanUp(results) {
+        protractor_retry_1.retry.onCleanUp(results);
     },
     baseUrl: config_helper_1.default.baseUrl,
 };

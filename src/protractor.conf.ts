@@ -1,6 +1,7 @@
 require('./core/prototypes');
 import * as jestExpect from 'expect';
 import * as path from 'path';
+import { retry } from 'protractor-retry';
 import config from './core/config.helper';
 import { deleteReports } from './core/fs/delete-files.helper';
 import { prepareCatalogs } from './core/fs/prepare-catalogs.helper';
@@ -86,6 +87,7 @@ exports.config = {
 
   async afterLaunch() {
     await disconnectBrowserstack(commandArgs.browserstack);
+    return retry.afterLaunch(2);
   },
 
   onPrepare() {
@@ -95,6 +97,7 @@ exports.config = {
         .window()
         .setSize(parseInt(config.browserWidth), parseInt(config.browserHeight));
     }
+    retry.onPrepare();
 
     modulesLoader.getModules('matchers');
     modulesLoader.getModules('dictionaries');
@@ -117,6 +120,10 @@ exports.config = {
     if (config.clearEmailInboxBeforeTests) {
       return emailService.clearInbox();
     }
+  },
+
+  onCleanUp(results) {
+    retry.onCleanUp(results);
   },
 
   baseUrl: config.baseUrl,

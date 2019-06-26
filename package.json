@@ -111,6 +111,7 @@
     "protractor": "5.4.2",
     "protractor-cucumber-framework": "^6.1.1",
     "protractor-multiple-cucumber-html-reporter-plugin": "^1.8.0",
+    "protractor-retry": "^1.2.8",
     "shelljs": "^0.8.3",
     "sugar-date": "^2.0.6",
     "webdriver-manager": "13.0.0"
@@ -147,7 +148,6 @@
     ]
   },
   "husky": {
-    "hooks": {
-    }
+    "hooks": {}
   }
 }
