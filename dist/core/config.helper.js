@@ -10,10 +10,9 @@ try {
                 config: {},
             },
         };
-        const project = process.argv.find(name => name.indexOf('--projectPath') >= 0);
-        const projectPath = project.substr(project.indexOf('=') + 1);
+        console.log(process.cwd());
         config = require(`${process.cwd()}/kakunin.conf.js`);
-        config.projectPath = projectPath;
+        config.projectPath = process.cwd();
         config.performance = commandArgs.performance || false;
     }
 }
