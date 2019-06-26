@@ -75,9 +75,9 @@ exports.config = {
     },
     async afterLaunch() {
         await browserstack_config_helper_1.disconnectBrowserstack(commandArgs.browserstack);
-        // if (config.jenkins) {
-        return protractor_retry_1.retry.afterLaunch(2);
-        // }
+        if (config_helper_1.default.jenkins) {
+            return protractor_retry_1.retry.afterLaunch(2);
+        }
     },
     onPrepare() {
         if (!config_helper_1.default.headless) {
@@ -100,14 +100,14 @@ exports.config = {
         if (config_helper_1.default.clearEmailInboxBeforeTests) {
             return emails_1.emailService.clearInbox();
         }
-        // if (config.jenkins) {
-        protractor_retry_1.retry.onPrepare();
-        // }
+        if (config_helper_1.default.jenkins) {
+            protractor_retry_1.retry.onPrepare();
+        }
     },
     onCleanUp(results) {
-        // if (config.jenkins) {
-        protractor_retry_1.retry.onCleanUp(results);
-        // }
+        if (config_helper_1.default.jenkins) {
+            protractor_retry_1.retry.onCleanUp(results);
+        }
     },
     baseUrl: config_helper_1.default.baseUrl,
 };
