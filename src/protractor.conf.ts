@@ -1,14 +1,13 @@
 require('./core/prototypes');
 import * as jestExpect from 'expect';
 import * as path from 'path';
-import { retry } from 'protractor-retry';
 import config from './core/config.helper';
-import { deleteReports } from './core/fs/delete-files.helper';
 import { prepareCatalogs } from './core/fs/prepare-catalogs.helper';
 import { browsersConfiguration, setSeleniumAddress } from './web/browsers/browsers-config.helper';
 import { getBrowsersDrivers } from './web/browsers/get-browser-drivers.helper';
 import { connectBrowserstack, disconnectBrowserstack } from './web/browsers/browserstack-config.helper';
 import { emailService } from './emails';
+const XMLReporter = require('ruru-protractor-junit-reporter');
 const commandArgs = require('minimist')(process.argv.slice(2));
 const modulesLoader = require('./core/modules-loader.helper.js').create();
 
@@ -26,19 +25,10 @@ const prepareReportCatalogs = () => {
   prepareCatalogs(performanceReportsDirectory);
 };
 
-const deleteReportFiles = () => {
-  deleteReports(reportsDirectory);
-  deleteReports(jsonOutputDirectory);
-  deleteReports(generatedReportsDirectory);
-  deleteReports(featureReportsDirectory);
-  deleteReports(performanceReportsDirectory);
-
-  console.log('All reports have been deleted!');
-};
-
 const configureMultiCapabilities = () => browsersConfiguration(config, commandArgs);
 
 exports.config = {
+  resultJsonOutputFile : `e2e${config.tags}.json`,
   seleniumAddress: setSeleniumAddress(commandArgs, config),
   getMultiCapabilities: configureMultiCapabilities(),
   jvmArgs: getBrowsersDrivers(commandArgs),
@@ -78,7 +68,6 @@ exports.config = {
 
   async beforeLaunch() {
     prepareReportCatalogs();
-    // deleteReportFiles();
 
     if (commandArgs.browserstack) {
       await connectBrowserstack((await configureMultiCapabilities()())[0]['browserstack.key']);
@@ -87,9 +76,15 @@ exports.config = {
 
   async afterLaunch() {
     await disconnectBrowserstack(commandArgs.browserstack);
-    if (config.jenkins) {
-      return retry.afterLaunch(2);
-    }
+    return new Promise((resolve) => {
+ 
+      const reporter = new XMLReporter({
+          title : `e2e${config.tags}`,
+          xmlReportDestPath : `e2e${config.tags}Report.xml`
+      });
+
+      reporter.generateXMLReport(exports.config.resultJsonOutputFile);
+    });
   },
 
   onPrepare() {
@@ -119,16 +114,6 @@ exports.config = {
 
     if (config.clearEmailInboxBeforeTests) {
       return emailService.clearInbox();
-    }
-
-    if (config.jenkins) {
-      retry.onPrepare();
-    }
-  },
-
-  onCleanUp(results) {
-    if (config.jenkins) {
-      retry.onCleanUp(results);
     }
   },
 

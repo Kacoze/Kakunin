@@ -3,14 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('./core/prototypes');
 const jestExpect = require("expect");
 const path = require("path");
-const protractor_retry_1 = require("protractor-retry");
 const config_helper_1 = require("./core/config.helper");
-const delete_files_helper_1 = require("./core/fs/delete-files.helper");
 const prepare_catalogs_helper_1 = require("./core/fs/prepare-catalogs.helper");
 const browsers_config_helper_1 = require("./web/browsers/browsers-config.helper");
 const get_browser_drivers_helper_1 = require("./web/browsers/get-browser-drivers.helper");
 const browserstack_config_helper_1 = require("./web/browsers/browserstack-config.helper");
 const emails_1 = require("./emails");
+const XMLReporter = require('ruru-protractor-junit-reporter');
 const commandArgs = require('minimist')(process.argv.slice(2));
 const modulesLoader = require('./core/modules-loader.helper.js').create();
 const reportsDirectory = path.join(process.cwd(), config_helper_1.default.reports);
@@ -25,16 +24,9 @@ const prepareReportCatalogs = () => {
     prepare_catalogs_helper_1.prepareCatalogs(featureReportsDirectory);
     prepare_catalogs_helper_1.prepareCatalogs(performanceReportsDirectory);
 };
-const deleteReportFiles = () => {
-    delete_files_helper_1.deleteReports(reportsDirectory);
-    delete_files_helper_1.deleteReports(jsonOutputDirectory);
-    delete_files_helper_1.deleteReports(generatedReportsDirectory);
-    delete_files_helper_1.deleteReports(featureReportsDirectory);
-    delete_files_helper_1.deleteReports(performanceReportsDirectory);
-    console.log('All reports have been deleted!');
-};
 const configureMultiCapabilities = () => browsers_config_helper_1.browsersConfiguration(config_helper_1.default, commandArgs);
 exports.config = {
+    resultJsonOutputFile: `e2e${config_helper_1.default.tags}.json`,
     seleniumAddress: browsers_config_helper_1.setSeleniumAddress(commandArgs, config_helper_1.default),
     getMultiCapabilities: configureMultiCapabilities(),
     jvmArgs: get_browser_drivers_helper_1.getBrowsersDrivers(commandArgs),
@@ -68,16 +60,19 @@ exports.config = {
     ],
     async beforeLaunch() {
         prepareReportCatalogs();
-        deleteReportFiles();
         if (commandArgs.browserstack) {
             await browserstack_config_helper_1.connectBrowserstack((await configureMultiCapabilities()())[0]['browserstack.key']);
         }
     },
     async afterLaunch() {
         await browserstack_config_helper_1.disconnectBrowserstack(commandArgs.browserstack);
-        if (config_helper_1.default.jenkins) {
-            return protractor_retry_1.retry.afterLaunch(2);
-        }
+        return new Promise((resolve) => {
+            const reporter = new XMLReporter({
+                title: `e2e${config_helper_1.default.tags}`,
+                xmlReportDestPath: `e2e${config_helper_1.default.tags}Report.xml`
+            });
+            reporter.generateXMLReport(exports.config.resultJsonOutputFile);
+        });
     },
     onPrepare() {
         if (!config_helper_1.default.headless) {
@@ -99,14 +94,6 @@ exports.config = {
         global.expect = jestExpect;
         if (config_helper_1.default.clearEmailInboxBeforeTests) {
             return emails_1.emailService.clearInbox();
-        }
-        if (config_helper_1.default.jenkins) {
-            protractor_retry_1.retry.onPrepare();
-        }
-    },
-    onCleanUp(results) {
-        if (config_helper_1.default.jenkins) {
-            protractor_retry_1.retry.onCleanUp(results);
         }
     },
     baseUrl: config_helper_1.default.baseUrl,
