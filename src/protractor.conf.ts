@@ -78,7 +78,7 @@ exports.config = {
 
   async beforeLaunch() {
     prepareReportCatalogs();
-    deleteReportFiles();
+    // deleteReportFiles();
 
     if (commandArgs.browserstack) {
       await connectBrowserstack((await configureMultiCapabilities()())[0]['browserstack.key']);
