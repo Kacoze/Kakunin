@@ -13,7 +13,7 @@ const XMLReporter = require('ruru-protractor-junit-reporter');
 const commandArgs = require('minimist')(process.argv.slice(2));
 const modulesLoader = require('./core/modules-loader.helper.js').create();
 const reportsDirectory = path.join(process.cwd(), config_helper_1.default.reports);
-const jsonOutputDirectory = path.join(reportsDirectory, '/../reports/', 'json-output-folder');
+const jsonOutputDirectory = path.join(reportsDirectory, 'json-output-folder');
 const generatedReportsDirectory = path.join(reportsDirectory, 'report');
 const featureReportsDirectory = path.join(generatedReportsDirectory, 'features');
 const performanceReportsDirectory = path.join(reportsDirectory, 'performance');
@@ -47,17 +47,17 @@ exports.config = {
         profile: false,
         'no-source': true,
     },
-    plugins: [
-        {
-            package: 'protractor-multiple-cucumber-html-reporter-plugin',
-            options: {
-                removeExistingJsonReportFile: false,
-                removeOriginalJsonReportFile: false,
-                automaticallyGenerateReport: false,
-                saveCollectedJSON: true,
-            },
-        },
-    ],
+    // plugins: [
+    //   {
+    //     package: 'protractor-multiple-cucumber-html-reporter-plugin',
+    //     options: {
+    //       removeExistingJsonReportFile: false,
+    //       removeOriginalJsonReportFile: false,
+    //       automaticallyGenerateReport: false,
+    //       saveCollectedJSON: false,
+    //     },
+    //   },
+    // ],
     async beforeLaunch() {
         prepareReportCatalogs();
         if (commandArgs.browserstack) {
