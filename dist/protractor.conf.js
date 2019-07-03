@@ -43,7 +43,7 @@ exports.config = {
             './web/cucumber/hooks.js',
             ...config_helper_1.default.step_definitions.map(file => path.join(config_helper_1.default.projectPath, file, '**/*.js')),
         ],
-        format: [`json:./${config_helper_1.default.reports}/${config_helper_1.default.tags}-features-report.json`],
+        format: [`json:./${config_helper_1.default.reports}/custom-json/${config_helper_1.default.tags}-${config_helper_1.default.brand || ''}-features-report.json`],
         profile: false,
         'no-source': true,
     },
