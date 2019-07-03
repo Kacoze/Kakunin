@@ -60,7 +60,7 @@ exports.config = {
       options: {
         removeExistingJsonReportFile: false,
         removeOriginalJsonReportFile: false,
-        automaticallyGenerateReport: true,
+        automaticallyGenerateReport: false,
         saveCollectedJSON: true,
       },
     },
