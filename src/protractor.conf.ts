@@ -28,7 +28,7 @@ const prepareReportCatalogs = () => {
 const configureMultiCapabilities = () => browsersConfiguration(config, commandArgs);
 
 exports.config = {
-  resultJsonOutputFile : `${jsonOutputDirectory}/forXML/e2e${config.tags}.json`,
+  resultJsonOutputFile : `${jsonOutputDirectory}/e2e${config.tags}.json`,
   seleniumAddress: setSeleniumAddress(commandArgs, config),
   getMultiCapabilities: configureMultiCapabilities(),
   jvmArgs: getBrowsersDrivers(commandArgs),
@@ -49,22 +49,22 @@ exports.config = {
       './web/cucumber/hooks.js',
       ...config.step_definitions.map(file => path.join(config.projectPath, file, '**/*.js')),
     ],
-    format: [`json:./${config.reports}/custom-json/${config.tags}-${config.brand || ''}-features-report.json`],
+    format: [`json:./${config.reports}/features-report.json`],
     profile: false,
     'no-source': true,
   },
 
-  // plugins: [
-  //   {
-  //     package: 'protractor-multiple-cucumber-html-reporter-plugin',
-  //     options: {
-  //       removeExistingJsonReportFile: false,
-  //       removeOriginalJsonReportFile: false,
-  //       automaticallyGenerateReport: false,
-  //       saveCollectedJSON: false,
-  //     },
-  //   },
-  // ],
+  plugins: [
+    {
+      package: 'protractor-multiple-cucumber-html-reporter-plugin',
+      options: {
+        removeExistingJsonReportFile: true,
+        removeOriginalJsonReportFile: true,
+        automaticallyGenerateReport: true,
+        saveCollectedJSON: true,
+      },
+    },
+  ],
 
   async beforeLaunch() {
     prepareReportCatalogs();
