@@ -12,7 +12,7 @@ const commandArgs = require('minimist')(process.argv.slice(2));
 const modulesLoader = require('./core/modules-loader.helper.js').create();
 
 const reportsDirectory = path.join(process.cwd(), config.reports);
-const jsonOutputDirectory = path.join(reportsDirectory, '/../', 'json-output-folder');
+const jsonOutputDirectory = path.join(reportsDirectory, '/../reports/', 'json-output-folder');
 const generatedReportsDirectory = path.join(reportsDirectory, 'report');
 const featureReportsDirectory = path.join(generatedReportsDirectory, 'features');
 const performanceReportsDirectory = path.join(reportsDirectory, 'performance');
