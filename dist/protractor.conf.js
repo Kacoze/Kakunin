@@ -26,7 +26,7 @@ const prepareReportCatalogs = () => {
 };
 const configureMultiCapabilities = () => browsers_config_helper_1.browsersConfiguration(config_helper_1.default, commandArgs);
 exports.config = {
-    resultJsonOutputFile: `${jsonOutputDirectory}/e2e${config_helper_1.default.tags}.json`,
+    resultJsonOutputFile: `${jsonOutputDirectory}/forXML/e2e${config_helper_1.default.tags}.json`,
     seleniumAddress: browsers_config_helper_1.setSeleniumAddress(commandArgs, config_helper_1.default),
     getMultiCapabilities: configureMultiCapabilities(),
     jvmArgs: get_browser_drivers_helper_1.getBrowsersDrivers(commandArgs),
@@ -43,7 +43,7 @@ exports.config = {
             './web/cucumber/hooks.js',
             ...config_helper_1.default.step_definitions.map(file => path.join(config_helper_1.default.projectPath, file, '**/*.js')),
         ],
-        format: [`json:./${config_helper_1.default.reports}/features-report.json`],
+        format: [`json:./${config_helper_1.default.reports}/${config_helper_1.default.tags}-features-report.json`],
         profile: false,
         'no-source': true,
     },
