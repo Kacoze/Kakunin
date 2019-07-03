@@ -58,8 +58,8 @@ exports.config = {
     {
       package: 'protractor-multiple-cucumber-html-reporter-plugin',
       options: {
-        removeExistingJsonReportFile: true,
-        removeOriginalJsonReportFile: true,
+        removeExistingJsonReportFile: false,
+        removeOriginalJsonReportFile: false,
         automaticallyGenerateReport: true,
         saveCollectedJSON: true,
       },
