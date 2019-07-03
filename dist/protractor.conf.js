@@ -26,7 +26,7 @@ const prepareReportCatalogs = () => {
 };
 const configureMultiCapabilities = () => browsers_config_helper_1.browsersConfiguration(config_helper_1.default, commandArgs);
 exports.config = {
-    resultJsonOutputFile: `e2e${config_helper_1.default.tags}.json`,
+    resultJsonOutputFile: `${jsonOutputDirectory}/e2e${config_helper_1.default.tags}.json`,
     seleniumAddress: browsers_config_helper_1.setSeleniumAddress(commandArgs, config_helper_1.default),
     getMultiCapabilities: configureMultiCapabilities(),
     jvmArgs: get_browser_drivers_helper_1.getBrowsersDrivers(commandArgs),
