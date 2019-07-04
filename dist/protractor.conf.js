@@ -26,7 +26,7 @@ const prepareReportCatalogs = () => {
 };
 const configureMultiCapabilities = () => browsers_config_helper_1.browsersConfiguration(config_helper_1.default, commandArgs);
 exports.config = {
-    resultJsonOutputFile: `${jsonOutputDirectory}/e2e${config_helper_1.default.tags}.json`,
+    resultJsonOutputFile: `${jsonOutputDirectory}/forXML/e2e${config_helper_1.default.tags}.json`,
     seleniumAddress: browsers_config_helper_1.setSeleniumAddress(commandArgs, config_helper_1.default),
     getMultiCapabilities: configureMultiCapabilities(),
     jvmArgs: get_browser_drivers_helper_1.getBrowsersDrivers(commandArgs),
@@ -43,21 +43,21 @@ exports.config = {
             './web/cucumber/hooks.js',
             ...config_helper_1.default.step_definitions.map(file => path.join(config_helper_1.default.projectPath, file, '**/*.js')),
         ],
-        format: [`json:./${config_helper_1.default.reports}/features-report.json`],
+        format: [`json:./${config_helper_1.default.reports}/custom-json/${config_helper_1.default.tags}-${config_helper_1.default.brand || ''}-features-report.json`],
         profile: false,
         'no-source': true,
     },
-    plugins: [
-        {
-            package: 'protractor-multiple-cucumber-html-reporter-plugin',
-            options: {
-                removeExistingJsonReportFile: true,
-                removeOriginalJsonReportFile: true,
-                automaticallyGenerateReport: true,
-                saveCollectedJSON: true,
-            },
-        },
-    ],
+    // plugins: [
+    //   {
+    //     package: 'protractor-multiple-cucumber-html-reporter-plugin',
+    //     options: {
+    //       removeExistingJsonReportFile: false,
+    //       removeOriginalJsonReportFile: false,
+    //       automaticallyGenerateReport: false,
+    //       saveCollectedJSON: false,
+    //     },
+    //   },
+    // ],
     async beforeLaunch() {
         prepareReportCatalogs();
         if (commandArgs.browserstack) {
