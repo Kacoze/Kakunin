@@ -18,7 +18,7 @@ const generatedReportsDirectory = path.join(reportsDirectory, 'report');
 const featureReportsDirectory = path.join(generatedReportsDirectory, 'features');
 const performanceReportsDirectory = path.join(reportsDirectory, 'performance');
 const prepareReportCatalogs = () => {
-    // prepareCatalogs(reportsDirectory);
+    prepare_catalogs_helper_1.prepareCatalogs(reportsDirectory);
     prepare_catalogs_helper_1.prepareCatalogs(jsonOutputDirectory);
     prepare_catalogs_helper_1.prepareCatalogs(generatedReportsDirectory);
     prepare_catalogs_helper_1.prepareCatalogs(featureReportsDirectory);
@@ -69,7 +69,7 @@ exports.config = {
         return new Promise((resolve) => {
             const reporter = new XMLReporter({
                 title: `e2e${config_helper_1.default.tags}`,
-                xmlReportDestPath: `e2e${config_helper_1.default.tags}Report.xml`
+                xmlReportDestPath: `kakunin/reports/e2e${config_helper_1.default.tags}Report.xml`
             });
             reporter.generateXMLReport(exports.config.resultJsonOutputFile);
         });
