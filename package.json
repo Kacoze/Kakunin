@@ -43,6 +43,7 @@
   },
   "main": "./dist/index",
   "scripts": {
+    "install": "tsc",
     "units": "cross-env jest  --setupFiles ./src/tests/init.ts --no-cache",
     "functional": "npm run build && cd functional-tests && rm -rf package-lock.json && rm -rf node_modules && npm i && npm run test",
     "test": "npm run units && npm run functional",

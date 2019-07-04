@@ -1,5 +1,5 @@
 #build files
-# dist
+dist
 
 # dependencies
 node_modules
