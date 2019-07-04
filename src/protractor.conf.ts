@@ -18,7 +18,7 @@ const featureReportsDirectory = path.join(generatedReportsDirectory, 'features')
 const performanceReportsDirectory = path.join(reportsDirectory, 'performance');
 
 const prepareReportCatalogs = () => {
-  prepareCatalogs(reportsDirectory);
+  // prepareCatalogs(reportsDirectory);
   prepareCatalogs(jsonOutputDirectory);
   prepareCatalogs(generatedReportsDirectory);
   prepareCatalogs(featureReportsDirectory);
