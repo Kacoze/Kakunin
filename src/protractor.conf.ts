@@ -80,7 +80,7 @@ exports.config = {
  
       const reporter = new XMLReporter({
           title : `e2e${config.tags}`,
-          xmlReportDestPath : `e2e${config.tags}Report.xml`
+          xmlReportDestPath : `kakunin/reports/e2e${config.tags}Report.xml`
       });
 
       reporter.generateXMLReport(exports.config.resultJsonOutputFile);
