@@ -68,6 +68,7 @@ const getExtendedBrowsersConfigs = (config, commandArgs): any => {
       '--disable-accelerated-2d-canvas',
       '--disable-accelerated-jpeg-decoding',
       '--no-sandbox',
+      '--disable-web-security'
     ];
   }
 
