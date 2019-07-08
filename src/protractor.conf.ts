@@ -54,17 +54,17 @@ exports.config = {
     'no-source': true,
   },
 
-  // plugins: [
-  //   {
-  //     package: 'protractor-multiple-cucumber-html-reporter-plugin',
-  //     options: {
-  //       removeExistingJsonReportFile: false,
-  //       removeOriginalJsonReportFile: false,
-  //       automaticallyGenerateReport: false,
-  //       saveCollectedJSON: false,
-  //     },
-  //   },
-  // ],
+  plugins: [
+    {
+      package: 'protractor-multiple-cucumber-html-reporter-plugin',
+      options: {
+        removeExistingJsonReportFile: false,
+        removeOriginalJsonReportFile: false,
+        automaticallyGenerateReport: !config.jenkins,
+        saveCollectedJSON: false,
+      },
+    },
+  ],
 
   async beforeLaunch() {
     prepareReportCatalogs();
